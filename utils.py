@@ -20,9 +20,7 @@ EXTENSION_TO_LANGUAGE_MAP = {
 
 ANALYSIS_TYPE = {
     "SECURITY": "security",
-    "AUDIT": "audit",
     "REVIEW": "review",
-    "PROMT": "promt",
 }
 
 def load_environment_variables(file_path: str) -> None:

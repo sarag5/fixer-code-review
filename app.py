@@ -39,12 +39,7 @@ def app():
         with st.form("repo_url_form"):
             repo_form.display_form()
 
-        # Check if the API key is valid before proceeding
-        if repo_form.clone_repo_button and not repo_form.is_api_key_valid():
-            st.stop()
-
-        repo_url, extensions = repo_form.get_form_data()
-
+        repo_url, extensions, analysis = repo_form.get_form_data()
         analyze_files_form = forms.AnalyzeFilesForm(session_state)
         with st.form("analyze_files_form"):
             if repo_form.clone_repo_button or session_state.get("code_files"):
@@ -62,7 +57,8 @@ def app():
             if session_state.get("analyze_files"):
                 if session_state.get("selected_files"):
                     recommendations = query.analyze_code_files(
-                        session_state.selected_files
+                        session_state.selected_files,
+                        analysis
                     )
 
                     # Display the recommendations

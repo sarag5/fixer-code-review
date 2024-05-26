@@ -1,7 +1,6 @@
 import logging
 import os
 
-import openai
 import repo
 import streamlit as st
 from streamlit_tree_select import tree_select
@@ -17,7 +16,6 @@ class RepoForm:
     def __init__(self, default_repo_url: str):
         self.default_repo_url = default_repo_url
         self.repo_url = ""
-        self.api_key = ""
         self.extensions = []
         self.analyze = ""
         self.additional_extensions = ""
@@ -28,17 +26,12 @@ class RepoForm:
             "GitHub Repository URL:", self.default_repo_url
         )
 
-        env_api_key = os.getenv("OPENAI_API_KEY", "test")
-        self.api_key = env_api_key
-        openai.api_key = self.api_key
-
         ANALYSIS_TYPE
 
         self.analyze = st.selectbox(
             "Type of analyze",
             (self.a_option)
         )
-
         self.extensions = st.multiselect(
             "File extensions to analyze",
             options=self.options,
@@ -59,6 +52,7 @@ class RepoForm:
         return (
             self.repo_url,
             self.extensions,
+            self.analyze,
         )
 
     def is_api_key_valid(self):
